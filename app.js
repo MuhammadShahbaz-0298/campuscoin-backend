@@ -1,0 +1,33 @@
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import { env } from "./config/env.js";
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import budgetRoutes from "./routes/budgetRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
+import insightRoutes from "./routes/insightRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import healthRoutes from "./routes/healthRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
+
+const app = express();
+app.use(helmet());
+app.use(cors({ origin: env.clientUrl }));
+app.use(express.json());
+app.use("/api/health", healthRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/budgets", budgetRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/insights", insightRoutes);
+app.use("/api/admin", adminRoutes);
+app.use(errorMiddleware);
+
+export default app;
